@@ -2,5 +2,5 @@
 # Displays the content of the current directory
 for path in **
 do
-  echo $path | cut -d- -f2-
+  echo "$path" | cut -d- -f2-
 done
