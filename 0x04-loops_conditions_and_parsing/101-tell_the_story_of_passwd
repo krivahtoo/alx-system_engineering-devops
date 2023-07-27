@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+# This script parses the /etc/passwd
+while read -r line
+do
+  IFS=":"
+  echo "$line" | cut -d: -f1,2,3,4,6,7 | {
+    read -r username password uid gid home shell_cmd
+    echo "The user $username is part of the $gid gang, lives in $home and rides $shell_cmd. ${uid}'s place is protected by the passcode $password, more info about the user here: $username"
+  }
+done < /etc/passwd
