@@ -1,0 +1,15 @@
+#!/usr/bin/env bash
+# This script is displaying 1-20 using while loop
+h=0
+echo "Hour: $h"
+while [[ $h -lt 12 ]]
+do
+  m=1
+  while [ $m -lt 60 ]
+  do
+    echo $m
+    m=$((m + 1))
+  done
+  h=$((h + 1))
+  echo "Hour: $h"
+done
