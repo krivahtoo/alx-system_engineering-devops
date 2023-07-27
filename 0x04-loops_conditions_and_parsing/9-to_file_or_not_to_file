@@ -4,7 +4,7 @@ filename='school'
 if [[ -e "$filename" ]]; then
   echo "$filename file exists"
 
-  if [[ -z "$(cat $filename)" ]]; then
+  if [[ -f "$filename" && -z "$(cat $filename)" ]]; then
     echo "$filename file is empty"
   else
     echo "$filename file is not empty"
