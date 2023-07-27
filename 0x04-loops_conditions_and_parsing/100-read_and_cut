@@ -1,0 +1,6 @@
+#!/usr/bin/env bash
+# This script parses the /etc/passwd
+while read -r line
+do
+  echo "$line" | cut -d: -f1,3,6
+done < /etc/passwd
