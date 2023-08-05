@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+cp /etc/hosts ~/hosts.new
+echo "127.0.0.2\tlocalhost\n8.8.8.8\tfacebook.com" ~/hosts.new
+cp -f ~/hosts.new /etc/hosts
