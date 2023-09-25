@@ -1,12 +1,8 @@
-include stdlib
-file_line { 'use the private key ~/.ssh/school':
-  path    => '/etc/ssh/ssh_config',
-  line    => '    IdentityFile ~/.ssh/school',
-  replace => true,
-}
-
-file_line { 'refuse to authenticate using a password':
-  path    => '/etc/ssh/ssh_config',
-  line    => '    PasswordAuthentication no',
-  replace => true,
+file { 'use the private key ~/.ssh/school':
+  ensure  => file,
+  path    => '/home/ubuntu/.ssh/config',
+  owner   => 'ubuntu',
+  content => "# SSH client configuration\n\n" .
+    "IdentityFile ~/.ssh/school\n" .
+    "PasswordAuthentication no\n",
 }
