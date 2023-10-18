@@ -1,0 +1,16 @@
+#!/usr/bin/env bash
+# display information about subdomains.
+
+function get_info() {
+    subdomain=$1
+    dig "$subdomain.$2" | awk '/ANSWER SECTION:/ {getline; print "The subdomain '"$subdomain"' is a "$4" record and points to "$5}'
+}
+
+if [ "$#" -eq 1 ]; then
+    subdomains=('www' 'lb-01' 'web-01' 'web-02')
+    for y in "${subdomains[@]}"; do
+        get_info "$y" "$1"
+    done
+elif [ "$#" -eq 2 ]; then
+    get_info "$2" "$1"
+fi
