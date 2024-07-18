@@ -1,0 +1,94 @@
+## What Happens When You Type `https://www.google.com` in Your Browser and Press Enter
+
+Understanding what happens when you type a URL into your browser and press Enter is crucial for software engineers. This journey, which seems instantaneous to users, involves numerous complex steps and components working together seamlessly. In this blog post, we will explore the entire process, from the moment you press Enter to the final rendering of the webpage. We will cover:
+
+1. [DNS Request](#dns-request)
+2. [TCP/IP](#tcpip)
+3. [Firewall](#firewall)
+4. [HTTPS/SSL](#httpsssl)
+5. [Load Balancer](#load-balancer)
+6. [Web Server](#web-server)
+7. [Application Server](#application-server)
+8. [Database](#database)
+
+### DNS Request
+
+When you type `https://www.google.com` into your browser and hit Enter, the first step is to resolve the domain name into an IP address. This process involves the Domain Name System (DNS):
+
+- **Browser Cache**: The browser first checks its cache to see if it has recently resolved `www.google.com`.
+- **Operating System Cache**: If the browser cache doesn't have it, the browser queries the OS's cache.
+- **Router Cache**: If the OS cache doesn't have it, the query goes to the local router, which might have its own cache.
+- **ISP DNS**: If the router cache is empty, the request is sent to the ISP's DNS server.
+- **Recursive Search**: If the ISP’s DNS server doesn't have the record, it performs a recursive search, querying other DNS servers starting from the root servers, then the TLD (Top Level Domain) servers, and finally the authoritative DNS server for `google.com`.
+
+The result of this process is an IP address, for example, `142.250.74.196`.
+
+### TCP/IP
+
+With the IP address in hand, your browser needs to establish a connection with Google’s server. This is where TCP/IP (Transmission Control Protocol/Internet Protocol) comes into play:
+
+- **TCP Handshake**: The browser initiates a TCP handshake with the server. This involves three steps:
+  1. **SYN**: The browser sends a SYN (synchronize) packet to the server.
+  2. **SYN-ACK**: The server responds with a SYN-ACK (synchronize-acknowledge) packet.
+  3. **ACK**: The browser sends an ACK (acknowledge) packet back to the server.
+
+This handshake establishes a connection and ensures that both the client and server are ready to communicate.
+
+### Firewall
+
+As the TCP packets travel between your browser and Google’s servers, they may pass through multiple firewalls:
+
+- **Local Firewall**: Your computer’s firewall ensures that outgoing requests are allowed.
+- **Network Firewall**: Your router’s firewall checks the outgoing request.
+- **Corporate/ISP Firewall**: Any intermediate firewalls may also inspect the packets for security reasons.
+
+Firewalls ensure that malicious traffic is filtered out and only legitimate traffic is allowed to pass through.
+
+### HTTPS/SSL
+
+Since the URL starts with `https`, the connection needs to be secured using SSL/TLS (Secure Sockets Layer/Transport Layer Security):
+
+- **SSL Handshake**: The browser and server perform an SSL handshake to establish a secure connection:
+  1. **Server Certificate**: The server sends its SSL certificate to the browser.
+  2. **Certificate Verification**: The browser verifies the certificate against its trusted Certificate Authorities (CAs).
+  3. **Session Keys**: Once verified, both parties generate session keys to encrypt the data.
+
+This ensures that the data transferred between your browser and Google’s server is encrypted and secure from eavesdroppers.
+
+### Load Balancer
+
+Once a secure connection is established, the request may be routed through a load balancer:
+
+- **Traffic Distribution**: The load balancer distributes incoming requests across multiple servers to ensure no single server is overwhelmed.
+- **Health Checks**: It also performs health checks to ensure traffic is only sent to healthy, responsive servers.
+- **Session Persistence**: It may maintain session persistence (or sticky sessions) to ensure that subsequent requests from the same user are routed to the same server.
+
+### Web Server
+
+The load balancer forwards the request to a web server:
+
+- **Request Handling**: The web server (e.g., Nginx, Apache) receives the request and processes it.
+- **Static Content**: If the request is for static content (e.g., HTML, CSS, JavaScript, images), the web server directly serves it from its file system.
+- **Dynamic Content**: If the request is for dynamic content, it forwards the request to an application server.
+
+### Application Server
+
+The application server handles the business logic of the application:
+
+- **Request Processing**: It processes the request, often involving complex business logic.
+- **Interactions**: It may interact with other services, perform calculations, or gather data from a database.
+
+### Database
+
+If the application server needs to retrieve or store data, it interacts with a database:
+
+- **Query Execution**: The application server sends SQL queries to the database.
+- **Data Retrieval**: The database processes these queries and returns the required data.
+- **Data Storage**: For any data storage operations, the database ensures data integrity and durability.
+
+### Conclusion
+
+Finally, the application server sends the processed data back to the web server, which then returns the response to your browser. Your browser receives the response, parses the HTML, CSS, and JavaScript, and renders the webpage. All of this happens in a matter of milliseconds, providing a seamless experience for the user.
+
+Understanding this process in detail not only helps in interviews but also in building efficient, secure, and scalable web applications. Whether you're focusing on front-end performance, server-side optimization, or infrastructure reliability, knowing what happens under the hood is invaluable.
+
