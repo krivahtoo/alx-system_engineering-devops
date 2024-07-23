@@ -1,0 +1,3 @@
+#!/usr/bin/env bash
+# 1. Run Nginx as Nginx
+su - nginx -c nginx
