@@ -1,3 +1,25 @@
 #!/usr/bin/env bash
 # 1. Run Nginx as Nginx
-su - nginx -c nginx
+# Create the nginx user if it does not exist
+if ! id -u nginx &> /dev/null; then
+  useradd -r -d /var/www -s /sbin/nologin nginx
+fi
+
+# Modify the Nginx configuration file
+NGINX_CONF="/etc/nginx/nginx.conf"
+
+# Backup the original configuration file
+cp $NGINX_CONF ${NGINX_CONF}.bak
+
+# Update the user and listen directives in the Nginx configuration file
+sed -i 's/user .*/user nginx;/g' $NGINX_CONF
+sed -i 's/listen 80 default_server;/listen 8080 default_server;/g' /etc/nginx/sites-available/default
+
+# Adjust the permissions of Nginx directories
+chown -R nginx:nginx /var/www
+chown -R nginx:nginx /var/log/nginx
+chown -R nginx:nginx /var/lib/nginx
+chown -R nginx:nginx /etc/nginx
+
+# Restart Nginx to apply changes
+service nginx restart
