@@ -3,9 +3,9 @@
 1. Export to CSV
 """
 
+import csv
 import requests
 import sys
-import csv
 
 
 def employee_todo_progress(employee_id):

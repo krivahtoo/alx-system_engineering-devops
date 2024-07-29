@@ -3,9 +3,9 @@
 2. Export to JSON
 """
 
+import json
 import requests
 import sys
-import json
 
 
 def employee_todo_progress(employee_id):
