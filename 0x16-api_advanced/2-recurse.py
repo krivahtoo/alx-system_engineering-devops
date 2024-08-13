@@ -22,7 +22,12 @@ def recurse(subreddit, hot_list=[], after=None):
 
     try:
         # Make the request to the Reddit API
-        response = requests.get(url, headers=headers, params=params, allow_redirects=False)
+        response = requests.get(
+            url,
+            headers=headers,
+            params=params,
+            allow_redirects=False
+        )
 
         # Check if the response status code indicates success
         if response.status_code == 200:
